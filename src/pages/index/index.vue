@@ -2,69 +2,59 @@
   <view class="content">
     <!-- 轮播图 -->
     <swiper class="image-container" previous-margin="45rpx" next-margin="45rpx" circular @change="swiperChange">
-      <swiper-item :class="currentIndex == index ? 'swiper-item' : 'swiper-item-side'" v-for="(item, index) in imgList"
-        :key="index" lazy-load :style="dontFirstAnimation ? 'animation: none;' : ''">
-        <view class="item" :class="currentIndex == index ? 'item-img' : 'item-img-side'">
-          <!-- <view class="item_1">
-            <image class="image" :src="item.image || errorImage" mode=""></image>
-            <view class="item_1-right">
-              {{ item.name }}
-              <text class="item_1-post">{{ item.post }}</text>
-              <view class="item_1-site">{{ item.site }}</view>
-            </view>
-          </view> -->
-          <!-- <view class="item_2" :style="{ 'bottom': currentIndex == index ? '38rpx' : '20rpx' }">
-            <view class="item_2-left">
-              满意度
-              <text class="item-highlight">99%</text>
-            </view>
-            <view class="item_2-right">
-              累计咨询
-              <text class="item-highlight">9999</text>
-            </view>
-          </view> -->
+      <swiper-item :class="data.currentIndex == index ? 'swiper-item' : 'swiper-item-side'"
+        v-for="(item, index) in data.imgList" :key="index" lazy-load
+        :style="data.dontFirstAnimation ? 'animation: none;' : ''">
+        <view class="item" :class="data.currentIndex == index ? 'item-img' : 'item-img-side'">
         </view>
       </swiper-item>
     </swiper>
+    <view class="" hover-class="none" hover-stop-propagation="false">
+      <text class="" selectable="false" space="false" decode="false">
+        pinia数据缓存展示
+      </text>
+      <text class="" selectable="false" space="false" decode="false">
+        {{ phoneInfo }}
+      </text>
+    </view>
   </view>
-  <privacy/>
+  <privacy />
   <tabber />
 </template>
  
-<script>
-export default {
-  data() {
-    return {
-      errorImage: '',
-      imgList: [{
-        name: '茉莉',
-        site: '中原区第一人民医院',
-        post: '神经内科·主任医师',
-        image: ''
-      }, {
-        name: '茉莉',
-        site: '中原区第一人民医院',
-        post: '神经内科·主任医师',
-        image: ''
-      }, {
-        name: '茉莉',
-        site: '中原区第一人民医院',
-        post: '神经内科·主任医师',
-        image: ''
-      }],
-      currentIndex: 0,
-      dontFirstAnimation: true
-    }
-  },
-  created(){
-    console.log(455552);
-  },
-  methods: {
-    swiperChange(e) {
-      this.dontFirstAnimation = true
-      this.currentIndex = e.detail.current
-    },
-  }
+<script setup lang="ts">
+import { reactive } from 'vue'
+// 导入状态仓库
+import { useAccountStore } from "@/store/index";
+// 使普通数据变响应式的函数
+import { storeToRefs } from "pinia";
+// 实例化仓库
+const store = useAccountStore();
+// 解构并使数据具有响应式
+const { phoneInfo } = storeToRefs(store);
+const data = reactive({
+  imgList: [{
+    name: '茉莉',
+    site: '中原区第一人民医院',
+    post: '神经内科·主任医师',
+    image: ''
+  }, {
+    name: '茉莉',
+    site: '中原区第一人民医院',
+    post: '神经内科·主任医师',
+    image: ''
+  }, {
+    name: '茉莉',
+    site: '中原区第一人民医院',
+    post: '神经内科·主任医师',
+    image: ''
+  }],
+  currentIndex: 0,
+  dontFirstAnimation: true
+})
+const swiperChange = (e: any) => {
+  data.dontFirstAnimation = true
+  data.currentIndex = e.detail.current
 }
 </script>
  
