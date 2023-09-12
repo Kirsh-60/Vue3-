@@ -34,8 +34,7 @@
 </template>
 <script setup>
 import { updateUserMessage, userInfo } from '@/api/common'
-import { ref, reactive, defineEmits } from 'vue'
-import { convertImageToBase64 } from '@/utils/toBase64'
+import { ref, defineEmits } from 'vue'
 const avatarUrl = ref("https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0")
 const nickname = ref('')
 const pass = ref(true)
@@ -56,6 +55,7 @@ const formSubmit = function (e) { //提交
             nickname.value = e.target.value.nickname
             allok(nickname.value)
         } else {
+            // eslint-disable-next-line no-undef
             uni.showToast({
                 icon: 'none',
                 title: "请填写昵称"
@@ -70,6 +70,7 @@ const onCancel = () => { //取消
 const allok = async (nickname_ed) => { //提交跳转
     console.log(nickname_ed, nickname.value);
     if (nickname_ed == '' || nickname.value == '') {
+        // eslint-disable-next-line no-undef
         uni.showToast({
             icon: 'none',
             title: "请填写昵称"
@@ -80,8 +81,9 @@ const allok = async (nickname_ed) => { //提交跳转
             headImgUrl: avatarUrl.value || 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0',
             nickname: nickname_ed || '微信用户'
         }
-        const { result, reply } = await updateUserMessage(data)
+        const { result } = await updateUserMessage(data)
         if (result.code != '0') { return }
+        // eslint-disable-next-line no-undef
         uni.showToast({
             title: result.msg,
             icon: 'success'
@@ -100,16 +102,10 @@ const queryHeadList = async () => {
         }
     })
 }
-const toBase64Img = ref('')
 const onChooseAvatar = (e) => { //修改用户头像
     console.log(e);
     if (e.detail) {
         avatarUrl.value = e.detail.avatarUrl
-        convertImageToBase64(avatarUrl.value).then((res) => {
-            if(res){
-                toBase64Img.value = res
-            }
-        })
     }
 }
 const loadError = () => {

@@ -17,7 +17,7 @@
 
 <script setup>
 import { ref } from "vue"
-import { onShow, onLoad, onHide } from '@dcloudio/uni-app';
+import { onShow } from '@dcloudio/uni-app';
 
 const showPrivacy = ref(false) //是否展示
 const privacyContractName = ref('') //项目

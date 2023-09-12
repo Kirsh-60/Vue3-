@@ -4,8 +4,8 @@ export const useAccountStore = defineStore("account", {
   state: () => {
     return {
       counter: 1 as number,
-      phoneInfo: {} as Object,
-      msg: "hello" as String,
+      phoneInfo: {} as object,
+      msg: "hello" as string,
       list: [
         {
           name: "iphone",
@@ -18,7 +18,7 @@ export const useAccountStore = defineStore("account", {
           count: 1,
         },
       ] as any,
-      kouling: "" as String,
+      kouling: "" as string,
       timuList: [] as any,
     };
   },
@@ -32,9 +32,9 @@ export const useAccountStore = defineStore("account", {
   // 同步异步都行
   actions: {
     async getKouling() {
-      let t_data = "?k=l663y1zhgt3w2";
-      let result: any = await getKoulingApi(t_data);
-      let { status, text } = result;
+      const t_data = "?k=l663y1zhgt3w2";
+      const result: any = await getKoulingApi(t_data);
+      const { status, text } = result;
       if (status === "ok") {
         this.kouling = text; //actions内部可以用this指向state
       }

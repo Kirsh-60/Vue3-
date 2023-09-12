@@ -19,6 +19,7 @@ onMounted(() => {
 })
 const curPath = ref('')
 watch(curPath, () => {
+  // eslint-disable-next-line no-undef
   const pages = getCurrentPages()
   curPath.value = pages.slice(-1)[0].route
 }, {

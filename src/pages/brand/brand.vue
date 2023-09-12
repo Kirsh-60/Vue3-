@@ -22,7 +22,6 @@
 </template>
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { ref, reactive } from "vue";
 import { useAccountStore } from "@/store/index";
 // 实例化
 const store = useAccountStore();
@@ -58,7 +57,7 @@ function changeAll() {
   // 必须将全部替换
   store.$state = {
     counter: 1000,
-    phoneInfo: '',
+    phoneInfo: {},
     msg: '咯咯哒',
     list: [{
       name: 'oppo',
