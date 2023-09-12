@@ -20,12 +20,6 @@
       }
     },
     {
-      "path": "pages/canvas/canvas",
-      "style": {
-        "navigationBarTitleText": "uni-app"
-      }
-    },
-    {
       "path": "pages/brand/brand",
       "style": {
         "navigationBarTitleText": "uni-app"

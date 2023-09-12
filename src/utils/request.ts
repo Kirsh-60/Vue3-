@@ -60,8 +60,13 @@ http.interceptors.response.use(
     },
     (error: HttpError) => {
         console.log('响应拦截器错误捕获', error)
+        uni.showToast({
+            title: '响应拦截器错误捕获',
+            icon: 'none'
+        })
         return Promise.resolve(error)
     }
+
 )
  
 function formatData(data: any) {

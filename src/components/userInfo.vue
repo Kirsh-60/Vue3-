@@ -1,5 +1,5 @@
 <template>
-    <view class="mark" catchtouchmove="move">
+    <view class="mark" v-if="UserInfoState" catchtouchmove="move">
         <view class="dialog">
             <!-- 头部 -->
             <text>
@@ -7,7 +7,7 @@
             </text>
             <text>
                 获取你的昵称
-                <!-- 、头像 -->
+                、头像
             </text>
             <image class="avatar" :src="avatarUrl" @error="loadError"></image>
             <button open-type="chooseAvatar" @chooseavatar="onChooseAvatar" class="btn"></button>
@@ -33,7 +33,7 @@
     </view>
 </template>
 <script setup>
-// import { updateUserMessage, userInfo } from '@/utils/api'
+import { updateUserMessage, userInfo } from '@/api/common'
 import { ref, reactive, defineEmits } from 'vue'
 import { convertImageToBase64 } from '@/utils/toBase64'
 const avatarUrl = ref("https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0")
@@ -80,42 +80,34 @@ const allok = async (nickname_ed) => { //提交跳转
             headImgUrl: avatarUrl.value || 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0',
             nickname: nickname_ed || '微信用户'
         }
-        // const { result, reply } = await updateUserMessage(data)
-        // if (result.code != '0') { return }
-        // uni.showToast({
-        //     title: result.msg,
-        //     icon: 'success'
-        // })
-        // emits('updateNickName', nickname_ed)
-        // emits('updateHeadImgUrl', avatarUrl.value)
-        // UserInfoState.value = false
+        const { result, reply } = await updateUserMessage(data)
+        if (result.code != '0') { return }
+        uni.showToast({
+            title: result.msg,
+            icon: 'success'
+        })
+        emits('updateNickName', nickname_ed)
+        emits('updateHeadImgUrl', avatarUrl.value)
+        UserInfoState.value = false
     }
 }
 
-// const queryHeadList = async () => {
-//     userInfo().then(res => {
-//         if (res.result.code == 0 && res.result.businessCode == 0) {
-//             nickname.value = res.reply.userInfo.nickName
-//             avatarUrl.value = res.reply.userInfo.headImgUrl || "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0"
-//         }
-//     })
-// }
+const queryHeadList = async () => {
+    userInfo().then(res => {
+        if (res.result.code == 0 && res.result.businessCode == 0) {
+            nickname.value = res.reply.userInfo.nickName
+            avatarUrl.value = res.reply.userInfo.headImgUrl || "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0"
+        }
+    })
+}
 const toBase64Img = ref('')
 const onChooseAvatar = (e) => { //修改用户头像
     console.log(e);
     if (e.detail) {
         avatarUrl.value = e.detail.avatarUrl
-
         convertImageToBase64(avatarUrl.value).then((res) => {
-            if (res) {
-                console.log(res);
-                uni.compressImage({
-                    src: res,
-                    quality: 50,
-                    complete: (res) => {
-                        console.log(res);
-                    }
-                })
+            if(res){
+                toBase64Img.value = res
             }
         })
     }
@@ -126,7 +118,7 @@ const loadError = () => {
 defineExpose({
     UserInfoState,
     nickname,
-    // queryHeadList
+    queryHeadList
 })
 </script>
 <style scoped lang="scss">

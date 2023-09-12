@@ -25,6 +25,21 @@ export function Login(data?:any) {
   });
 }
 
+export function userInfo(data?:any) {
+  return http.request({
+    url: "user/userInfo",
+    method: "POST",
+    data,
+  });
+}
+export function updateUserMessage(data?:any) {
+  return http.request({
+    url: "user/updateUserMessage",
+    method: "POST",
+    data,
+  });
+}
+
 // 指定类型
 /*export function switchLanguage(data: types.languageTypes) {
      return http.request({
