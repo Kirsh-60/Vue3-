@@ -1,7 +1,7 @@
 const isOnline: boolean = process.env.NODE_ENV === "development" ? false : true;
 // 线上 配置
 const configOnline = {
-  requestUrl: "https://mapi.vjifen.com/vjifenInterface",
+  requestUrl: "https://baidu.com/",
 };
 // 测试 配置
 const configDev = {
