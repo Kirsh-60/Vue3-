@@ -16,7 +16,7 @@
             </text>
             <form bindsubmit="formsubmit" @submit="formSubmit" @reset="formReset">
                 <input type="nickname" :value="nickname" class="weui-input" placeholder="请输入昵称" name="nickname"
-                    maxlength="16" @nicknamereview="bindnicknamereview" @blur="onBlur" />
+                    maxlength="16" @nicknamereview="bindnicknamereview" />
                 <text class="xianzhi" selectable="false" space="false" decode="false">
                     限1-16个字符
                 </text>
