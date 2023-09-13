@@ -1,6 +1,7 @@
 {
   "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
+    "ignoreDeprecations": "5.0",// 添加这句代码
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
